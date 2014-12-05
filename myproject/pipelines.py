@@ -24,11 +24,11 @@ class MySQLStorePipeline(object):
 
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                db = 'test',
+                db = 'jibenditu',
                 #user = 'user',
                 user = 'root',
                 #passwd = '******',
-                passwd = 'root',
+                passwd = '',
                 cursorclass = MySQLdb.cursors.DictCursor,
                 charset = 'utf8',
                 use_unicode = False
@@ -42,11 +42,16 @@ class MySQLStorePipeline(object):
         return item
   
     def _conditional_insert(self, tx, item):
-        if item.get('name'):
-            tx.execute(                "insert into book (name, publisher, publish_date, price )                  values (%s, %s, %s, %s)",
-                (item['name'],  item['publisher'], item['publish_date'], 
-                item['price'])
+        if item.get('id'):
+            tx.execute("insert into dangdang (id ,name  ) values (%s, %s)",
+                (item['id'],item['name'])#,  item['publisher'], item['publish_date'], 
+                #item['price'])
             )
+        #if item.get('name'):
+        #    tx.execute("insert into dangdang (name, publisher, publish_date, price ) values (%s, %s, %s, %s)",
+        #        (item['name'],  item['publisher'], item['publish_date'], 
+        #        item['price'])
+        #    )
   
   
   
