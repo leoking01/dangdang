@@ -13,14 +13,17 @@ add = 0
 sys.stdout=open('output.txt','w')
 class BookSpider(CrawlSpider):
     name = 'dangdang'
-    allowed_domains = ['book.dangdang.com']
+    allowed_domains = [ 'e.dangdang.com']
     start_urls = [
-			"http://product.dangdang.com/1900011000.html"
+#        "http://book.dangdang.com"
+        'http://e.dangdang.com/list_98.01.03.45.htm'
+        #'http://e.dangdang.com'
     ]
 
     rules = (
         #Rule(SgmlLinkExtractor(allow=(r'http://book.dangdang.com'))),
-        Rule(SgmlLinkExtractor(allow=(r'http://product.dangdang.com/1900011000\.html')), callback="parse_item"),
+        #Rule(SgmlLinkExtractor(allow=(r'http://product.dangdang.com/1900011000\.html')), callback="parse_item"),
+        Rule(SgmlLinkExtractor(allow=(r'http://e.dangdang.com/.*\.htm')), callback="parse_item"),
     )
 
 
@@ -31,8 +34,10 @@ class BookSpider(CrawlSpider):
         global add
         add+=1
         item['id']=add
-        names = hxs.select('/html/body/div/div/h1/span[@class]/text()').extract()
-        item['name']=names and names[0] or ''
+        #names = hxs.select('/html/body/div/div/h1/span[@class]/text()').extract()
+        #xiaowangzi = hxs.select('/html/body/div/div/div/div/div/div/div/div/ul/li[@class]/a/@title').extract()
+        shehuidangdang = hxs.select('/html/body/div/div/div/div[@class=\'e_Cbdr\']/a/@title').extract()
+        item['name']=shehuidangdang and shehuidangdang[0] or ''
 #        author=hxs.select('//div[@class]//a/text()').extract()
 #        item['author']=author and author[0] or ''
 #        publisher = hxs.select('//div[@class]/p[2]//a/text()').extract()

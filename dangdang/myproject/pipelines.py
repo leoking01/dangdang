@@ -24,7 +24,7 @@ class MySQLStorePipeline(object):
 
     def __init__(self):
         self.dbpool = adbapi.ConnectionPool('MySQLdb',
-                db = 'jibenditu',
+                db = 'dangdang',
                 #user = 'user',
                 user = 'root',
                 #passwd = '******',
@@ -43,8 +43,8 @@ class MySQLStorePipeline(object):
   
     def _conditional_insert(self, tx, item):
         if item.get('id'):
-            tx.execute("insert into dangdang (id ,name  ) values (%s, %s)",
-                (item['id'],item['name'])#,  item['publisher'], item['publish_date'], 
+            tx.execute("insert into dangdang (name  ) values (%s)",
+                (item['name'])#,  item['publisher'], item['publish_date'], 
                 #item['price'])
             )
         #if item.get('name'):
@@ -53,5 +53,6 @@ class MySQLStorePipeline(object):
         #        item['price'])
         #    )
   
-  
+    def handle_error(self,e):
+        log.err(e);  
   

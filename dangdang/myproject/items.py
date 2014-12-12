@@ -16,7 +16,10 @@ from scrapy.item import Item, Field
 
 class BookItem(Item):
     # define the fields for your item here like:
+    id = Field()
     name = Field()
+
+
     publisher = Field()
     publish_date = Field()
     price = Field()
